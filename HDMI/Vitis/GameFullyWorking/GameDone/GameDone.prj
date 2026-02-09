@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<sdkproject:SdkProject xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:sdkproject="http://www.xilinx.com/sdkproject" name="GameDone" location="C:/DERDEJAAR/EOS/GAME/GameFullyWorking/GameDone" platform="C:/DERDEJAAR/EOS/GAME/GameFullyWorking/design_1_wrapper_T7/export/design_1_wrapper_T7/design_1_wrapper_T7.xpfm" platformUID="xilinx:pynq-z2::0.0(custom)" systemProject="GameDone_system" sysConfig="design_1_wrapper_T7" runtime="cpp" cpu="freertos10_xilinx_ps7_cortexa9_0" cpuInstance="ps7_cortexa9_0" os="freertos10_xilinx" mssSignature="056683afe2390a46257e4446fe4c2ce7">
+  <configuration name="Debug" id="xilinx.gnu.armv7.exe.debug.1077872361">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+    <lastBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <configuration name="Release" id="xilinx.gnu.armv7.exe.release.2097069491" dirty="true">
+    <configBuildOptions xsi:type="sdkproject:SdkOptions"/>
+  </configuration>
+  <template appTemplateName="freertos_lwip_udp_perf_server" hasBspSettings="true"/>
+</sdkproject:SdkProject>

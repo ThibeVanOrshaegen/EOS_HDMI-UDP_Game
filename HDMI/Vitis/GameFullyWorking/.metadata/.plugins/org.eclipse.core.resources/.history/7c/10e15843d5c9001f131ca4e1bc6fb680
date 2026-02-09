@@ -1,0 +1,806 @@
+//UDP
+#include <sleep.h>
+#include "xparameters.h"
+#include "netif/xadapter.h"
+#include "platform_config.h"
+#include "xil_printf.h"
+#include "lwip/init.h"
+#include "lwip/inet.h"
+
+//QUEUE
+#include "FreeRTOS.h"
+#include "task.h"
+#include "queue.h"
+#include "timers.h"
+#include "semphr.h"
+
+//HDMI
+#include "xstatus.h"
+#include "xil_exception.h"
+#include "xil_assert.h"
+#include "xaxivdma.h"
+#include "xaxivdma_i.h"
+#include "xparameters.h"
+#include "xaxivdma.h"
+#include "xscugic.h"
+#include "sleep.h"
+#include <stdlib.h>
+#include "xil_cache.h"
+#include <stdio.h>
+#include <string.h>
+/*-----------------------------------------------------------*/
+/*-----------------------------------------------------------*/
+//UDP
+#if LWIP_DHCP==1
+#include "lwip/dhcp.h"
+extern volatile int dhcp_timoutcntr;
+err_t dhcp_start(struct netif *netif);
+#endif
+
+#ifdef XPS_BOARD_ZCU102
+#if defined(XPAR_XIICPS_0_DEVICE_ID) || defined(XPAR_XIICPS_0_BASEADDR)
+int IicPhyReset(void);
+#endif
+#endif
+
+static int complete_nw_thread;
+
+void print_app_header();
+void start_application();
+
+#define THREAD_STACKSIZE 1024
+
+#define DEFAULT_IP_ADDRESS "192.168.137.1"
+#define DEFAULT_IP_MASK "255.255.255.0"
+#define DEFAULT_GW_ADDRESS "192.168.128.1"
+
+struct netif server_netif;
+/*-----------------------------------------------------------*/
+//QUEUE
+#define TIMER_ID 1
+#define DELAY_10_SECONDS 10000UL
+#define DELAY_1_SECOND 1000UL
+
+#define QUEUE_LENGTH_1 10
+#define QUEUE_LENGTH_2 10
+#define QUEUE_LENGTH_3 10
+
+#define ITEM_SIZE_QUEUE_1 sizeof(uint32_t)
+#define ITEM_SIZE_QUEUE_2 sizeof(uint32_t)
+#define ITEM_SIZE_QUEUE_3 sizeof(uint32_t)
+
+static void ServerReceiveTask( void *pvParameters );
+static void ServerMessageTask(char *pvParameters );
+
+static void HDMITask( void *pvParameters );
+static void InitalisatieHDMITask( void *pvParameters );
+
+static void Distributor( void *pvParameters );
+
+#define COMBINED_LENGTH (QUEUE_LENGTH_1 + QUEUE_LENGTH_2 + QUEUE_LENGTH_3 + 1)
+
+QueueSetHandle_t xQueueSet;
+QueueHandle_t xQueue1, xQueue2, xQueue3, xSemaphore;
+QueueSetMemberHandle_t xActivatedMember;
+uint32_t xReceivedFromQueue1;
+uint32_t xReceivedFromQueue2;
+uint32_t xReceivedFromQueue3;
+
+static TaskHandle_t xTxTask,xTxTask2,xRxTask;
+
+QueueHandle_t messagereceived;
+
+char messagefromserver[1500];
+static int lastProcessedMessage = -1;
+
+static int alreadywon = 0;
+static int winningplayer = 0;
+/*-----------------------------------------------------------*/
+//HDMI
+#define SUBFRAME_HORIZONTAL_SIZE 1920
+#define SUBFRAME_VERTICAL_SIZE 1080
+#define TOTAL_FRAME_SIZE SUBFRAME_HORIZONTAL_SIZE*SUBFRAME_VERTICAL_SIZE*3 //RGB
+
+static XScuGic Intc;
+static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId);
+
+const int rows = 6;
+const int columns = 6;
+
+const int BlockWidth = SUBFRAME_HORIZONTAL_SIZE / columns;
+const int BlockHeight = SUBFRAME_VERTICAL_SIZE / rows;
+
+unsigned char Buffer[TOTAL_FRAME_SIZE];
+unsigned char TempBuffer[TOTAL_FRAME_SIZE];
+
+typedef struct {
+    int player;
+    int column;
+    int row;
+} PlayerMove;
+
+QueueHandle_t playerMoveQueue;
+
+#define COLUMNS 6
+#define ROWS 6
+int columnHeights[COLUMNS] = {0};
+int gameBoard[ROWS][COLUMNS] = {0};
+/*-----------------------------------------------------------*/
+/*-----------------------------------------------------------*/
+//UDP
+
+static void print_ip(char *msg, ip_addr_t *ip)
+{
+	xil_printf(msg);
+	xil_printf("%d.%d.%d.%d\n\r", ip4_addr1(ip), ip4_addr2(ip),
+				ip4_addr3(ip), ip4_addr4(ip));
+}
+
+static void print_ip_settings(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw)
+{
+	print_ip("Board IP:       ", ip);
+	print_ip("Netmask :       ", mask);
+	print_ip("Gateway :       ", gw);
+}
+
+static void assign_default_ip(ip_addr_t *ip, ip_addr_t *mask, ip_addr_t *gw)
+{
+	int err;
+
+	xil_printf("Configuring default IP %s \r\n", DEFAULT_IP_ADDRESS);
+
+	err = inet_aton(DEFAULT_IP_ADDRESS, ip);
+	if(!err)
+		xil_printf("Invalid default IP address: %d\r\n", err);
+
+	err = inet_aton(DEFAULT_IP_MASK, mask);
+	if(!err)
+		xil_printf("Invalid default IP MASK: %d\r\n", err);
+
+	err = inet_aton(DEFAULT_GW_ADDRESS, gw);
+	if(!err)
+		xil_printf("Invalid default gateway address: %d\r\n", err);
+}
+
+void network_thread(void *p)
+{
+#if LWIP_DHCP==1
+	int mscnt = 0;
+#endif
+	/* the mac address of the board. this should be unique per board */
+	u8_t mac_ethernet_address[] = { 0x00, 0x0a, 0x35, 0x00, 0x01, 0x02 };
+
+	/* Add network interface to the netif_list, and set it as default */
+	if (!xemac_add(&server_netif, NULL, NULL, NULL, mac_ethernet_address,
+		PLATFORM_EMAC_BASEADDR)) {
+		xil_printf("Error adding N/W interface\r\n");
+		return;
+	}
+
+	netif_set_default(&server_netif);
+
+	/* specify that the network if is up */
+	netif_set_up(&server_netif);
+
+	/* start packet receive thread - required for lwIP operation */
+	sys_thread_new("xemacif_input_thread",
+			(void(*)(void*))xemacif_input_thread, &server_netif,
+			THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
+
+	complete_nw_thread = 1;
+
+#if LWIP_DHCP==1
+	dhcp_start(&server_netif);
+	while (1) {
+		vTaskDelay(DHCP_FINE_TIMER_MSECS / portTICK_RATE_MS);
+		dhcp_fine_tmr();
+		mscnt += DHCP_FINE_TIMER_MSECS;
+		if (mscnt >= DHCP_COARSE_TIMER_SECS*1000) {
+			dhcp_coarse_tmr();
+			mscnt = 0;
+		}
+	}
+#else
+	vTaskDelete(NULL);
+#endif
+}
+
+int main_thread()
+{
+
+#if LWIP_DHCP==1
+	int mscnt = 0;
+#endif
+
+#ifdef XPS_BOARD_ZCU102
+	IicPhyReset();
+#endif
+	xil_printf("\n\r\n\r");
+	xil_printf("-----lwIP Socket Mode UDP Server Application------\r\n");
+
+	/* initialize lwIP before calling sys_thread_new */
+	lwip_init();
+
+	/* any thread using lwIP should be created using sys_thread_new */
+	sys_thread_new("nw_thread", network_thread, NULL,
+			THREAD_STACKSIZE, DEFAULT_THREAD_PRIO);
+
+	while(!complete_nw_thread)
+		usleep(50);
+
+#if LWIP_DHCP==1
+	while (1) {
+		vTaskDelay(DHCP_FINE_TIMER_MSECS / portTICK_RATE_MS);
+		if (server_netif.ip_addr.addr) {
+			xil_printf("DHCP request success\r\n");
+			break;
+		}
+		mscnt += DHCP_FINE_TIMER_MSECS;
+		if (mscnt >= 50000) {
+			xil_printf("ERROR: DHCP request timed out\r\n");
+			assign_default_ip(&(server_netif.ip_addr),
+						&(server_netif.netmask),
+						&(server_netif.gw));
+			break;
+		}
+	}
+
+#else
+	assign_default_ip(&(server_netif.ip_addr), &(server_netif.netmask),
+				&(server_netif.gw));
+#endif
+
+	print_ip_settings(&(server_netif.ip_addr), &(server_netif.netmask),
+				&(server_netif.gw));
+	xil_printf("\r\n");
+
+	/* print all application headers */
+	print_app_header();
+	xil_printf("\r\n");
+
+	/* start the application*/
+	start_application();
+
+	vTaskDelete(NULL);
+	return 0;
+}
+/*-----------------------------------------------------------*/
+
+static void ReadCallBack(void *CallbackRef, u32 Mask)
+{
+	/* User can add his code in this call back function */
+	xil_printf("Read Call back function is called\r\n");
+}
+
+static void ReadErrorCallBack(void *CallbackRef, u32 Mask)
+{
+	/* User can add his code in this call back function */
+	xil_printf("Read Call back Error function is called\r\n");
+
+}
+
+static int SetupIntrSystem(XAxiVdma *AxiVdmaPtr, u16 ReadIntrId)
+{
+	int Status;
+	XScuGic *IntcInstancePtr =&Intc;
+	XScuGic_Config *IntcConfig;
+	IntcConfig = XScuGic_LookupConfig(XPAR_PS7_SCUGIC_0_DEVICE_ID);
+	/* Initialize the interrupt controller and connect the ISRs */
+	Status = XScuGic_CfgInitialize(IntcInstancePtr,IntcConfig,IntcConfig->CpuBaseAddress);
+	if (Status != XST_SUCCESS) {
+		xil_printf( "Failed init intc\r\n");
+		return XST_FAILURE;
+	}
+
+	Status = XScuGic_Connect(IntcInstancePtr, ReadIntrId,(Xil_InterruptHandler)XAxiVdma_ReadIntrHandler,(void *)AxiVdmaPtr);
+	if (Status != XST_SUCCESS) {
+		xil_printf("Failed read channel connect intc %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	/* Enable interrupts from the hardware */
+	XScuGic_Enable(IntcInstancePtr, ReadIntrId);
+
+	Xil_ExceptionInit();
+
+	Xil_ExceptionRegisterHandler(XIL_EXCEPTION_ID_INT,(Xil_ExceptionHandler)XScuGic_InterruptHandler,(void *)IntcInstancePtr);
+
+	Xil_ExceptionEnable();
+
+	/* Register call-back functions
+	 */
+	XAxiVdma_SetCallBack(AxiVdmaPtr, XAXIVDMA_HANDLER_GENERAL, ReadCallBack,
+		(void *)AxiVdmaPtr, XAXIVDMA_READ);
+
+	XAxiVdma_SetCallBack(AxiVdmaPtr, XAXIVDMA_HANDLER_ERROR,
+		ReadErrorCallBack, (void *)AxiVdmaPtr, XAXIVDMA_READ);
+
+	return XST_SUCCESS;
+}
+/*-----------------------------------------------------------*/
+
+static void ServerReceiveTask( void *pvParameters )
+{
+	while(1){
+	int test = 1;
+	if (xQueueReceive(messagereceived, messagefromserver, portMAX_DELAY) == pdTRUE)
+	{
+	    xil_printf("messagefromserver %s\n",messagefromserver);
+		xQueueSend(xQueue1, &test, 0);
+	}
+	}
+	 vTaskDelete(NULL);
+}
+
+void ServerMessageTask(char* messagefromserver) {
+
+    char *SplitMessageServer;
+
+    static char *ArrayMessages[1500];
+    static char *ArrayIP[1500] = {0};
+
+    static int IndexIP = 0;
+    int player = 0;
+    int move = -1;
+
+    char *ipAddress = SplitMessageServer;
+    int ipExists = 0;
+    int ipIndex = -1;
+
+    xil_printf("ServerMessageTask| Message From Server: %s\n", messagefromserver);
+    SplitMessageServer = strtok(messagefromserver, ",");
+
+    // Extract move and IP address
+    if (SplitMessageServer != NULL) {
+        move = atoi(SplitMessageServer);  // Move
+        SplitMessageServer = strtok(NULL, ",");  // IP
+    }
+
+    // ERROR
+    if (SplitMessageServer == NULL || move < 1 || move > COLUMNS) {
+        xil_printf("Invalid move or message format: %s\n", messagefromserver);
+        return;
+    }
+
+    // Checking IP adress
+    for (int i = 0; i < IndexIP; i++) {
+        if (strcmp(ArrayIP[i], ipAddress) == 0) {
+            ipExists = 1;
+            ipIndex = i;
+            break;
+        }
+    }
+
+    if (!ipExists && IndexIP <= 2) {
+        ArrayIP[IndexIP] = strdup(ipAddress); // Add new IP to the array
+        xil_printf("ServerMessageTask| ArrayIP[%d]: %s\n", IndexIP, ipAddress);
+        ipIndex = IndexIP;
+        IndexIP++;
+    }
+
+    if (ipIndex == -1) {
+        xil_printf("Error: Unable to assign player for IP %s\n", ipAddress);
+        return;
+    }
+    if(IndexIP == 2)
+    {
+        xil_printf("ipindex is full");
+    }
+    if(IndexIP > 2)
+    {
+        xil_printf("ipindex is full so can not add it");
+    }
+
+    player = ipIndex + 1;
+    xil_printf("Player %d (IP: %s) is making move %d\n", player, ipAddress, move);
+
+    drawCircle(player, move - 1, Buffer);
+}
+
+/*-----------------------------------------------------------*/
+//HDMI
+
+void drawBackground(unsigned char* buffer) {
+    memcpy(TempBuffer, buffer, TOTAL_FRAME_SIZE);
+
+    // Blue background
+    for (int i = 0; i < SUBFRAME_VERTICAL_SIZE; ++i) {
+        for (int j = 0; j < SUBFRAME_HORIZONTAL_SIZE * 3; j += 3) {
+            TempBuffer[(i * SUBFRAME_HORIZONTAL_SIZE * 3) + j] = 0x00;     // G
+            TempBuffer[(i * SUBFRAME_HORIZONTAL_SIZE * 3) + j + 1] = 0xff; // B
+            TempBuffer[(i * SUBFRAME_HORIZONTAL_SIZE * 3) + j + 2] = 0x00; // R
+        }
+    }
+
+    int radius = 60; // Radius of the circles
+    int shadowOffset = 10; // Offset for the shadow
+    int circleColorR = 0xff; // Base Red
+    int circleColorG = 0xff; // Base Green
+    int circleColorB = 0xff; // Base Blue
+    int shadowColorR = 0x50; // Shadow Red
+    int shadowColorG = 0x50; // Shadow Green
+    int shadowColorB = 0x50; // Shadow Blue
+
+    // Function to check if a point is inside a circle
+    int isInsideCircle(int x, int y, int cx, int cy, int r) {
+        int dx = x - cx;
+        int dy = y - cy;
+        return (dx * dx + dy * dy) <= (r * r);
+    }
+
+    // Draw circles
+    for (int row = 0; row < rows; ++row) {
+        for (int col = 0; col < columns; ++col) {
+            int centerX = (col * BlockWidth) + (BlockWidth / 2);
+            int centerY = (row * BlockHeight) + (BlockHeight / 2);
+
+            // Render the shadow
+            for (int y = centerY - radius + shadowOffset; y <= centerY + radius + shadowOffset; ++y) {
+                for (int x = centerX - radius + shadowOffset; x <= centerX + radius + shadowOffset; ++x) {
+                    if (x >= 0 && x < SUBFRAME_HORIZONTAL_SIZE && y >= 0 && y < SUBFRAME_VERTICAL_SIZE &&
+                        isInsideCircle(x, y, centerX + shadowOffset, centerY + shadowOffset, radius)) {
+                        int offset = (y * SUBFRAME_HORIZONTAL_SIZE + x) * 3;
+                        TempBuffer[offset] = shadowColorG;     // G
+                        TempBuffer[offset + 1] = shadowColorB; // B
+                        TempBuffer[offset + 2] = shadowColorR; // R
+                    }
+                }
+            }
+
+            // Render the circle with shading
+            for (int y = centerY - radius; y <= centerY + radius; ++y) {
+                for (int x = centerX - radius; x <= centerX + radius; ++x) {
+                    if (x >= 0 && x < SUBFRAME_HORIZONTAL_SIZE && y >= 0 && y < SUBFRAME_VERTICAL_SIZE &&
+                        isInsideCircle(x, y, centerX, centerY, radius)) {
+                        // Calculate shading based on distance from a simulated light source
+                        int dx = x - centerX;
+                        int dy = y - centerY;
+
+                        // Simulated light source from the top-left corner of the circle
+                        int lightIntensity = (dx + dy + radius) / (2 * radius) * 128; // Scale shading to [0, 128]
+                        if (lightIntensity < 0) lightIntensity = 0;
+                        if (lightIntensity > 128) lightIntensity = 128;
+
+                        // Apply shading
+                        unsigned char shadedR = circleColorR - lightIntensity;
+                        unsigned char shadedG = circleColorG - lightIntensity;
+                        unsigned char shadedB = circleColorB - lightIntensity;
+
+                        int offset = (y * SUBFRAME_HORIZONTAL_SIZE + x) * 3;
+                        TempBuffer[offset] = shadedG;     // G
+                        TempBuffer[offset + 1] = shadedB; // B
+                        TempBuffer[offset + 2] = shadedR; // R
+                    }
+                }
+            }
+        }
+        memcpy(Buffer, TempBuffer, TOTAL_FRAME_SIZE);
+    }
+    memcpy(buffer, TempBuffer, TOTAL_FRAME_SIZE);
+}
+
+int checkFourInARow(int player, int row, int column, int winningTokens[4][2]) {
+    int directions[4][2] = {
+        {0, 1},
+        {1, 0},
+        {1, 1},
+        {1, -1}
+    };
+
+    for (int d = 0; d < 4; d++) {
+        int count = 1;  // Current count
+        int dx = directions[d][0];
+        int dy = directions[d][1];
+
+        // Reset winningTokens array for this direction
+        winningTokens[0][0] = row;
+        winningTokens[0][1] = column;
+        int index = 1;
+
+        // Check positive direction
+        for (int step = 1; step < 4; step++) {
+            int newRow = row + step * dx;
+            int newCol = column + step * dy;
+
+            if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLUMNS &&
+                gameBoard[newRow][newCol] == player) {
+                winningTokens[index][0] = newRow;
+                winningTokens[index][1] = newCol;
+                count++;
+                index++;
+            } else {
+                break;
+            }
+        }
+
+        // Check negative direction
+        for (int step = 1; step < 4; step++) {
+            int newRow = row - step * dx;
+            int newCol = column - step * dy;
+
+            if (newRow >= 0 && newRow < ROWS && newCol >= 0 && newCol < COLUMNS &&
+                gameBoard[newRow][newCol] == player) {
+                winningTokens[index][0] = newRow;
+                winningTokens[index][1] = newCol;
+                count++;
+                index++;
+            } else {
+                break;
+            }
+        }
+
+        if (count >= 4) {
+            return 1;  // Win
+        }
+    }
+    return 0;  // No win
+}
+
+
+void drawCircle(int playernumber, int message, unsigned char* buffer) {
+    xil_printf("Drawing circle...\n");
+
+    playerMoveQueue = xQueueCreate(100, sizeof(PlayerMove));
+    memcpy(TempBuffer, buffer, TOTAL_FRAME_SIZE);
+
+    int isInsideCircle(int x, int y, int cx, int cy, int r) {
+        int dx = x - cx;
+        int dy = y - cy;
+        return (dx * dx + dy * dy) <= (r * r);
+    }
+
+    int column = message % 6;
+
+    if (column < 0 || column >= COLUMNS) {
+        xil_printf("Invalid column: %d\n", column);
+        return;
+    }
+
+    // Check if column is  full
+    if (columnHeights[column] >= ROWS) {
+        xil_printf("Column %d is full! Move ignored.\n", column + 1);
+        return;
+    }
+
+    int row = ROWS - columnHeights[column] - 1;
+    gameBoard[row][column] = playernumber;
+    columnHeights[column]++;
+    xil_printf("Player %d placed token at row %d, column %d\n", playernumber, row, column);
+
+    int xStartX = column * BlockWidth;
+    int yStartX = row * BlockHeight;
+    int radiusX = 60;
+    int centerX_X = xStartX + BlockWidth / 2;
+    int centerY_X = yStartX + BlockHeight / 2;
+
+    int winningTokens[4][2] = {{0, 0}, {0, 0}, {0, 0}, {0, 0}};
+
+    if (checkFourInARow(playernumber, row, column, winningTokens)) {
+        xil_printf("Player %d wins!\n", playernumber);
+        alreadywon = 1; // Player has won
+        winningplayer = playernumber;
+        xil_printf("alreadywon set to %d\n", alreadywon);
+    }
+
+    xil_printf("Current columnHeights: ");
+    for (int i = 0; i < COLUMNS; i++) {
+        xil_printf("%d ", columnHeights[i]);
+    }
+    xil_printf("\n");
+
+    xil_printf("Current gameBoard state:\n");
+    for (int r = 0; r < ROWS; r++) {
+        for (int c = 0; c < COLUMNS; c++) {
+            xil_printf("%d ", gameBoard[r][c]);
+        }
+        xil_printf("\n");
+    }
+
+    if (alreadywon) {
+        xil_printf("Player %d has already won. Changing background to black and highlighting winning tokens.\n", winningplayer);
+
+        // Black background
+        for (int i = 0; i < SUBFRAME_VERTICAL_SIZE; ++i) {
+            for (int j = 0; j < SUBFRAME_HORIZONTAL_SIZE * 3; j += 3) {
+                TempBuffer[(i * SUBFRAME_HORIZONTAL_SIZE * 3) + j] = 0x00;     // Red
+                TempBuffer[(i * SUBFRAME_HORIZONTAL_SIZE * 3) + j + 1] = 0x00; // Green
+                TempBuffer[(i * SUBFRAME_HORIZONTAL_SIZE * 3) + j + 2] = 0x00; // Blue
+            }
+        }
+
+        // Highlight only the winning tokens
+        for (int i = 0; i < 4; i++) {
+            int r = winningTokens[i][0];
+            int c = winningTokens[i][1];
+
+            int xStartX = c * BlockWidth;
+            int yStartX = r * BlockHeight;
+            int centerX_X = xStartX + BlockWidth / 2;
+            int centerY_X = yStartX + BlockHeight / 2;
+
+            // Draw the token
+            for (int y = yStartX; y < yStartX + BlockHeight; ++y) {
+                for (int x = xStartX; x < xStartX + BlockWidth; ++x) {
+                    if (isInsideCircle(x, y, centerX_X, centerY_X, radiusX)) {
+                        int bufferIndex = (y * SUBFRAME_HORIZONTAL_SIZE + x) * 3;
+
+                        if (winningplayer == 1) { // Yellow
+                            TempBuffer[bufferIndex] = 0xff;     // Red
+                            TempBuffer[bufferIndex + 1] = 0x00; // Green
+                            TempBuffer[bufferIndex + 2] = 0xff; // Blue
+                        } else if (winningplayer == 2) { // Red
+                            TempBuffer[bufferIndex] = 0x00;     // Red
+                            TempBuffer[bufferIndex + 1] = 0x00; // Green
+                            TempBuffer[bufferIndex + 2] = 0xff; // Blue
+                        }
+                    }
+                }
+            }
+            memcpy(Buffer, TempBuffer, TOTAL_FRAME_SIZE);
+        }
+        memcpy(Buffer, TempBuffer, TOTAL_FRAME_SIZE);
+        return;
+    }
+
+    PlayerMove move = {playernumber, column + 1, row};
+    xQueueSend(playerMoveQueue, &move, portMAX_DELAY);
+
+    for (int y = yStartX; y < yStartX + BlockHeight; ++y) {
+        for (int x = xStartX; x < xStartX + BlockWidth; ++x) {
+            if (isInsideCircle(x, y, centerX_X, centerY_X, radiusX)) {
+                int bufferIndex = (y * SUBFRAME_HORIZONTAL_SIZE + x) * 3;
+
+                if (playernumber == 1) {
+                    TempBuffer[bufferIndex] = 0xff;
+                    TempBuffer[bufferIndex + 1] = 0x00;
+                    TempBuffer[bufferIndex + 2] = 0xff;
+                } else if (playernumber == 2) {
+                    TempBuffer[bufferIndex] = 0x00;
+                    TempBuffer[bufferIndex + 1] = 0x00;
+                    TempBuffer[bufferIndex + 2] = 0xff;
+                }
+            }
+        }
+
+    }
+    memcpy(buffer, TempBuffer, TOTAL_FRAME_SIZE);
+}
+
+/*-----------------------------------------------------------*/
+//DISTRIBUTOR
+static void Distributor( void *pvParameters )
+{
+	for (;;)
+	{
+        xActivatedMember = xQueueSelectFromSet(xQueueSet, portMAX_DELAY);
+	    xil_printf("i am in before distributor\n");
+
+        if (xActivatedMember == xQueue1) {
+            xQueueReceive(xQueue1, &xReceivedFromQueue1, 0);
+            xil_printf("Distributor| Received from Queue1 ServerReceiveTask: %d\n", xReceivedFromQueue1);
+            ServerMessageTask(messagefromserver);
+        }
+        if (xActivatedMember == xQueue2) {
+        	xQueueReceive(xQueue2, &xReceivedFromQueue2, 0);
+            xil_printf("Distributor| Received from Queue1 HDMI: %d\n", xReceivedFromQueue2);
+        	drawBackground(Buffer);
+
+        }
+        if (xActivatedMember == xSemaphore) {
+            xil_printf("Semaphore event processed!\n");
+        }
+	}
+}
+
+static void HDMITask(void *pvParameters)
+{
+	int hdmivariable = 1;
+	xQueueSend(xQueue2, &hdmivariable, 0);
+    vTaskDelete(NULL);
+}
+
+/*-----------------------------------------------------------*/
+//MAIN
+
+int main()
+{
+	messagereceived = xQueueCreate(10, sizeof(char[1500]));
+
+	sys_thread_new("main_thread", (void(*)(void*))main_thread, NULL, THREAD_STACKSIZE * 2, DEFAULT_THREAD_PRIO);
+
+    int Status;
+	int Index;
+	u32 Addr;
+	XAxiVdma InstancePtr;
+	XAxiVdma_Config *config = XAxiVdma_LookupConfig(XPAR_AXI_VDMA_0_DEVICE_ID);
+	XAxiVdma_DmaSetup ReadCfg;
+
+	xil_printf("\n--- Entering main() --- \r\n");
+	xil_printf("Starting the first VDMA \n\r");
+
+	Status = XAxiVdma_CfgInitialize(&InstancePtr, config, config->BaseAddress);
+	if (Status != XST_SUCCESS)
+	{
+		xil_printf(
+		"Configuration Initialization failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	ReadCfg.VertSizeInput = SUBFRAME_VERTICAL_SIZE;
+	ReadCfg.HoriSizeInput = SUBFRAME_HORIZONTAL_SIZE*3;
+
+	ReadCfg.Stride = SUBFRAME_HORIZONTAL_SIZE*3;
+	ReadCfg.FrameDelay = 0;  /* This example does not test frame delay */
+
+	ReadCfg.EnableCircularBuf = 1;
+	ReadCfg.EnableSync = 1;  /* No Gen-Lock */
+
+	ReadCfg.PointNum = 0;    /* No Gen-Lock */
+	ReadCfg.EnableFrameCounter = 0; /* Endless transfers */
+
+	ReadCfg.FixedFrameStoreAddr = 0; /* We are not doing parking */
+
+	Status = XAxiVdma_DmaConfig(&InstancePtr, XAXIVDMA_READ, &ReadCfg);
+	if (Status != XST_SUCCESS)
+	{
+		xil_printf("Read channel config failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	Addr =(u32)&(Buffer[0]);
+	//ReadCount = Config->MaxFrameStoreNum;
+	for (Index = 0; Index < InstancePtr.MaxNumFrames; Index++)
+	{
+		ReadCfg.FrameStoreStartAddr[Index] = Addr;
+		Addr += TOTAL_FRAME_SIZE;
+	}
+
+	/* Set the buffer addresses for transfer in the DMA engine
+	* The buffer addresses are physical addresses
+	*/
+	Status = XAxiVdma_DmaSetBufferAddr(&InstancePtr, XAXIVDMA_READ,ReadCfg.FrameStoreStartAddr);
+	if (Status != XST_SUCCESS)
+	{
+		xil_printf("Read channel set buffer address failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	XAxiVdma_IntrEnable(&InstancePtr, XAXIVDMA_IXR_ALL_MASK, XAXIVDMA_READ);
+
+	SetupIntrSystem(&InstancePtr,XPAR_FABRIC_AXI_VDMA_0_MM2S_INTROUT_INTR);
+
+	Xil_DCacheFlush();
+
+	Status = XAxiVdma_DmaStart(&InstancePtr, XAXIVDMA_READ);
+	if (Status != XST_SUCCESS)
+	{
+		xil_printf("Start read transfer failed %d\r\n", Status);
+		return XST_FAILURE;
+	}
+
+	xTaskCreate(ServerReceiveTask, "Receiving Message Server Task", configMINIMAL_STACK_SIZE * 2, NULL, tskIDLE_PRIORITY, &xTxTask);
+	xTaskCreate(HDMITask, "HDMI Task", configMINIMAL_STACK_SIZE * 2, NULL, tskIDLE_PRIORITY + 2, &xTxTask2);
+	xTaskCreate(Distributor, "Distributor Task", configMINIMAL_STACK_SIZE * 2, NULL, tskIDLE_PRIORITY, &xRxTask);
+
+    xQueueSet = xQueueCreateSet(COMBINED_LENGTH);
+    xQueue1 = xQueueCreate(QUEUE_LENGTH_1, ITEM_SIZE_QUEUE_1);
+    xQueue2 = xQueueCreate(QUEUE_LENGTH_2, ITEM_SIZE_QUEUE_2);
+    xQueue3 = xQueueCreate(QUEUE_LENGTH_3, ITEM_SIZE_QUEUE_3);
+    xSemaphore = xSemaphoreCreateBinary();
+
+    configASSERT(xQueueSet);
+    configASSERT(xQueue1);
+    configASSERT(xQueue2);
+    configASSERT(xQueue3);
+    configASSERT(xSemaphore);
+
+    xQueueAddToSet(xQueue1, xQueueSet);
+    xQueueAddToSet(xQueue2, xQueueSet);
+    xQueueAddToSet(xQueue3, xQueueSet);
+    xQueueAddToSet(xSemaphore, xQueueSet);
+
+
+	vTaskStartScheduler();
+	while(1);
+	return 0;
+}

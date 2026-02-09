@@ -1,0 +1,30 @@
+Nothing to build in platform 'design_1_wrapper_T7'
+
+14:35:38 **** Incremental Build of configuration Debug for project GameDone ****
+make all 
+make --no-print-directory pre-build
+a9-linaro-pre-build-step
+' '
+make --no-print-directory main-build
+'Building file: ../src/main.c'
+'Invoking: ARM v7 gcc compiler'
+arm-none-eabi-gcc -Wall -O0 -g3 -c -fmessage-length=0 -MT"src/main.o" -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -IC:/DERDEJAAR/EOS/GAME/GameFullyWorking/design_1_wrapper_T7/export/design_1_wrapper_T7/sw/design_1_wrapper_T7/freertos10_xilinx_ps7_cortexa9_0/bspinclude/include -MMD -MP -MF"src/main.d" -MT"src/main.o" -o "src/main.o" "../src/main.c"
+../src/main.c: In function 'ServerMessageTask':
+../src/main.c:337:18: warning: unused variable 'ArrayMessages' [-Wunused-variable]
+  337 |     static char *ArrayMessages[1500];
+      |                  ^~~~~~~~~~~~~
+../src/main.c: At top level:
+../src/main.c:337:18: warning: 'ArrayMessages' defined but not used [-Wunused-variable]
+'Finished building: ../src/main.c'
+' '
+'Building target: GameDone.elf'
+'Invoking: ARM v7 gcc linker'
+arm-none-eabi-gcc -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard -Wl,-build-id=none -specs=Xilinx.spec -Wl,-T -Wl,../src/lscript.ld -LC:/DERDEJAAR/EOS/GAME/GameFullyWorking/design_1_wrapper_T7/export/design_1_wrapper_T7/sw/design_1_wrapper_T7/freertos10_xilinx_ps7_cortexa9_0/bsplib/lib -o "GameDone.elf"  ./src/iic_phyreset.o ./src/main.o ./src/udp_perf_server.o   -Wl,--start-group,-lxil,-lfreertos,-lgcc,-lc,--end-group -Wl,--start-group,-lxil,-llwip4,-lgcc,-lc,--end-group
+'Finished building target: GameDone.elf'
+' '
+'Invoking: ARM v7 Print Size'
+arm-none-eabi-size GameDone.elf  |tee "GameDone.elf.size"
+   text	   data	    bss	    dec	    hex	filename
+ 207989	   3548	52557888	52769425	3253291	GameDone.elf
+'Finished building: GameDone.elf.size'
+' '
