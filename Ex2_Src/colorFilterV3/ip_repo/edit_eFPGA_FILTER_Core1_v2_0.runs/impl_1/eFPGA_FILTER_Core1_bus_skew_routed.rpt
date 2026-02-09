@@ -1,0 +1,16 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1.2 (win64) Build 5164865 Thu Sep  5 14:37:11 MDT 2024
+| Date         : Sun Dec 29 11:18:26 2024
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_bus_skew -warn_on_violation -file eFPGA_FILTER_Core1_bus_skew_routed.rpt -pb eFPGA_FILTER_Core1_bus_skew_routed.pb -rpx eFPGA_FILTER_Core1_bus_skew_routed.rpx
+| Design       : eFPGA_FILTER_Core1
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Bus Skew Report
+
+No bus skew constraints
+

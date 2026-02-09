@@ -1,0 +1,208 @@
+
+*** Running vivado
+    with args -log eFPGA_FILTER_Core1.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source eFPGA_FILTER_Core1.tcl
+
+
+
+****** Vivado v2024.1.2 (64-bit)
+  **** SW Build 5164865 on Thu Sep  5 14:37:11 MDT 2024
+  **** IP Build 5164407 on Fri Sep  6 08:18:11 MDT 2024
+  **** SharedData Build 5164864 on Thu Sep 05 13:09:09 MDT 2024
+  **** Start of session at: Sun Dec 29 11:16:44 2024
+    ** Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.
+    ** Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+
+source eFPGA_FILTER_Core1.tcl -notrace
+create_project: Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 488.449 ; gain = 126.246
+INFO: [IP_Flow 19-234] Refreshing IP repositories
+INFO: [IP_Flow 19-1700] Loaded user IP repository 'c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0'.
+WARNING: [IP_Flow 19-2248] Failed to load user IP repository 'c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_AXI_FILTER_Core1_1_0'; Can't find the specified path.
+If this directory should no longer be in your list of user repositories, go to the IP Settings dialog and remove it.
+INFO: [IP_Flow 19-2313] Loaded Vivado IP repository 'C:/Xilinx/Vivado/2024.1/data/ip'.
+WARNING: [IP_Flow 19-4995] The host OS only allows 260 characters in a normal path. The IP cache path is more than 80 characters. If you experience issues with IP caching, please consider changing the IP cache to a location with a shorter path. Alternately consider using the OS subst command to map part of the path to a drive letter. 
+Current IP cache path is c:/eos/eos_hdmi-udp_game/ex2_src/colorfilterv3/ip_repo/edit_eFPGA_FILTER_Core1_v2_0.cache/ip 
+Command: synth_design -top eFPGA_FILTER_Core1 -part xc7z020clg400-1
+Starting synth_design
+Attempting to get a license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Common 17-349] Got license for feature 'Synthesis' and/or device 'xc7z020'
+INFO: [Synth 8-7079] Multithreading enabled for synth_design using a maximum of 2 processes.
+INFO: [Synth 8-7078] Launching helper process for spawning children vivado processes
+INFO: [Synth 8-7075] Helper process launched with PID 2516
+---------------------------------------------------------------------------------
+Starting Synthesize : Time (s): cpu = 00:00:01 ; elapsed = 00:00:05 . Memory (MB): peak = 955.156 ; gain = 455.215
+---------------------------------------------------------------------------------
+INFO: [Synth 8-638] synthesizing module 'eFPGA_FILTER_Core1' [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1.vhd:23]
+INFO: [Synth 8-638] synthesizing module 'eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS' [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS.vhd:23]
+WARNING: [Synth 8-614] signal 'ARESETN' is read in the process but is not in the sensitivity list [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS.vhd:25]
+INFO: [Synth 8-256] done synthesizing module 'eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS' (0#1) [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS.vhd:23]
+INFO: [Synth 8-638] synthesizing module 'eFPGA_FILTER_Core1_master_stream_v2_0_M00_AXIS' [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1_master_stream_v2_0_M00_AXIS.vhd:23]
+WARNING: [Synth 8-614] signal 'ARESETN' is read in the process but is not in the sensitivity list [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1_master_stream_v2_0_M00_AXIS.vhd:25]
+INFO: [Synth 8-256] done synthesizing module 'eFPGA_FILTER_Core1_master_stream_v2_0_M00_AXIS' (0#1) [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1_master_stream_v2_0_M00_AXIS.vhd:23]
+INFO: [Synth 8-256] done synthesizing module 'eFPGA_FILTER_Core1' (0#1) [c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/eFPGA_FILTER_Core1_2_0/hdl/eFPGA_FILTER_Core1.vhd:23]
+WARNING: [Synth 8-7129] Port M_AXIS_TREADY in module eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS is either unconnected or has no load
+---------------------------------------------------------------------------------
+Finished Synthesize : Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1064.551 ; gain = 564.609
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Constraint Validation : Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1064.551 ; gain = 564.609
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Loading Part and Timing Information
+---------------------------------------------------------------------------------
+Loading part: xc7z020clg400-1
+---------------------------------------------------------------------------------
+Finished Loading Part and Timing Information : Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1064.551 ; gain = 564.609
+---------------------------------------------------------------------------------
+INFO: [Device 21-403] Loading part xc7z020clg400-1
+---------------------------------------------------------------------------------
+Finished RTL Optimization Phase 2 : Time (s): cpu = 00:00:01 ; elapsed = 00:00:06 . Memory (MB): peak = 1064.551 ; gain = 564.609
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start RTL Component Statistics 
+---------------------------------------------------------------------------------
+Detailed RTL Component Info : 
++---Registers : 
+	               24 Bit    Registers := 2     
+	                1 Bit    Registers := 2     
++---Muxes : 
+	   2 Input   24 Bit        Muxes := 1     
+---------------------------------------------------------------------------------
+Finished RTL Component Statistics 
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Part Resource Summary
+---------------------------------------------------------------------------------
+INFO: [Device 21-9227] Part: xc7z020clg400-1 does not have CEAM library.
+Part Resources:
+DSPs: 220 (col length:60)
+BRAMs: 280 (col length: RAMB18 60 RAMB36 30)
+---------------------------------------------------------------------------------
+Finished Part Resource Summary
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Cross Boundary and Area Optimization
+---------------------------------------------------------------------------------
+WARNING: [Synth 8-7080] Parallel synthesis criteria is not met
+WARNING: [Synth 8-3917] design eFPGA_FILTER_Core1 has port S_AXIS_TREADY driven by constant 1
+---------------------------------------------------------------------------------
+Finished Cross Boundary and Area Optimization : Time (s): cpu = 00:00:01 ; elapsed = 00:00:17 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+No constraint files found.
+---------------------------------------------------------------------------------
+Start Timing Optimization
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Timing Optimization : Time (s): cpu = 00:00:01 ; elapsed = 00:00:18 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Technology Mapping
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Technology Mapping : Time (s): cpu = 00:00:01 ; elapsed = 00:00:18 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Flattening Before IO Insertion
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Final Netlist Cleanup
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished IO Insertion : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Instances
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Instances : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Rebuilding User Hierarchy
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Rebuilding User Hierarchy : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Ports
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Ports : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Handling Custom Attributes
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Handling Custom Attributes : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Renaming Generated Nets
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Finished Renaming Generated Nets : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
+Start Writing Synthesis Report
+---------------------------------------------------------------------------------
+
+Report BlackBoxes: 
++-+--------------+----------+
+| |BlackBox name |Instances |
++-+--------------+----------+
++-+--------------+----------+
+
+Report Cell Usage: 
++------+-----+------+
+|      |Cell |Count |
++------+-----+------+
+|1     |BUFG |     1|
+|2     |LUT1 |     1|
+|3     |LUT2 |     4|
+|4     |LUT4 |     1|
+|5     |LUT5 |     1|
+|6     |LUT6 |     4|
+|7     |FDCE |    50|
+|8     |IBUF |    28|
+|9     |OBUF |    26|
++------+-----+------+
+
+Report Instance Areas: 
++------+---------------------+-----------------------------------------------+------+
+|      |Instance             |Module                                         |Cells |
++------+---------------------+-----------------------------------------------+------+
+|1     |top                  |                                               |   116|
+|2     |  master_stream_inst |eFPGA_FILTER_Core1_master_stream_v2_0_M00_AXIS |    25|
+|3     |  slave_stream_inst  |eFPGA_FILTER_Core1_slave_stream_v2_0_S00_AXIS  |    36|
++------+---------------------+-----------------------------------------------+------+
+---------------------------------------------------------------------------------
+Finished Writing Synthesis Report : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+---------------------------------------------------------------------------------
+Synthesis finished with 0 errors, 0 critical warnings and 5 warnings.
+Synthesis Optimization Runtime : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+Synthesis Optimization Complete : Time (s): cpu = 00:00:02 ; elapsed = 00:00:21 . Memory (MB): peak = 1278.629 ; gain = 778.688
+INFO: [Project 1-571] Translating synthesized netlist
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1287.613 ; gain = 0.000
+INFO: [Project 1-570] Preparing netlist for logic optimization
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1391.289 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Synth Design complete | Checksum: 62d10ca6
+INFO: [Common 17-83] Releasing license: Synthesis
+20 Infos, 7 Warnings, 0 Critical Warnings and 0 Errors encountered.
+synth_design completed successfully
+synth_design: Time (s): cpu = 00:00:02 ; elapsed = 00:00:23 . Memory (MB): peak = 1391.289 ; gain = 895.324
+Write ShapeDB Complete: Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 1391.289 ; gain = 0.000
+INFO: [Common 17-1381] The checkpoint 'c:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/colorFilterV3/ip_repo/edit_eFPGA_FILTER_Core1_v2_0.runs/synth_1/eFPGA_FILTER_Core1.dcp' has been generated.
+INFO: [Vivado 12-24828] Executing command : report_utilization -file eFPGA_FILTER_Core1_utilization_synth.rpt -pb eFPGA_FILTER_Core1_utilization_synth.pb
+INFO: [Common 17-206] Exiting Vivado at Sun Dec 29 11:17:15 2024...

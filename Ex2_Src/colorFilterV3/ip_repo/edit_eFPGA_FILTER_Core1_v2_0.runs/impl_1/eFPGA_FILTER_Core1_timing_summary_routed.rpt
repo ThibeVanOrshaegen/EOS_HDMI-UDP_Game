@@ -1,0 +1,611 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1.2 (win64) Build 5164865 Thu Sep  5 14:37:11 MDT 2024
+| Date         : Sun Dec 29 11:18:25 2024
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing_summary -max_paths 10 -report_unconstrained -file eFPGA_FILTER_Core1_timing_summary_routed.rpt -pb eFPGA_FILTER_Core1_timing_summary_routed.pb -rpx eFPGA_FILTER_Core1_timing_summary_routed.rpx -warn_on_violation
+| Design       : eFPGA_FILTER_Core1
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                   :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  No
+  Borrow Time for Max Delay Exceptions       :  Yes
+  Merge Timing Exceptions                    :  Yes
+  Inter-SLR Compensation                     :  Conservative
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+------------------------------------------------------------------------------------------------
+| Report Methodology
+| ------------------
+------------------------------------------------------------------------------------------------
+
+Rule       Severity          Description                  Violations  
+---------  ----------------  ---------------------------  ----------  
+TIMING-17  Critical Warning  Non-clocked sequential cell  50          
+
+Note: This report is based on the most recent report_methodology run and may not be up-to-date. Run report_methodology on the current design for the latest report.
+
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock (50)
+2. checking constant_clock (0)
+3. checking pulse_width_clock (0)
+4. checking unconstrained_internal_endpoints (148)
+5. checking no_input_delay (27)
+6. checking no_output_delay (25)
+7. checking multiple_clock (0)
+8. checking generated_clocks (0)
+9. checking loops (0)
+10. checking partial_input_delay (0)
+11. checking partial_output_delay (0)
+12. checking latch_loops (0)
+
+1. checking no_clock (50)
+-------------------------
+ There are 50 register/latch pins with no clock driven by root clock pin: ACLK (HIGH)
+
+
+2. checking constant_clock (0)
+------------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock (0)
+---------------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints (148)
+--------------------------------------------------
+ There are 148 pins that are not constrained for maximum delay. (HIGH)
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay (27)
+-------------------------------
+ There are 27 input ports with no input delay specified. (HIGH)
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay (25)
+--------------------------------
+ There are 25 ports with no output delay specified. (HIGH)
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock (0)
+------------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks (0)
+--------------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops (0)
+---------------------
+ There are 0 combinational loops in the design.
+
+
+10. checking partial_input_delay (0)
+------------------------------------
+ There are 0 input ports with partial input delay specified.
+
+
+11. checking partial_output_delay (0)
+-------------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops (0)
+----------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+        inf        0.000                      0                  173          inf        0.000                      0                  173           NA           NA                      NA                    NA  
+
+
+There are no user specified timing constraints.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------
+| Intra Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Inter Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Other Path Groups Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    ----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| User Ignored Path Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+
+
+------------------------------------------------------------------------------------------------
+| Unconstrained Path Table
+| ------------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+(none)                                    
+
+
+------------------------------------------------------------------------------------------------
+| Timing Details
+| --------------
+------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------
+Path Group:  (none)
+From Clock:  
+  To Clock:  
+
+Max Delay           173 Endpoints
+Min Delay           173 Endpoints
+--------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[4]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[4]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.814ns  (logic 3.152ns (35.763%)  route 5.662ns (64.237%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X87Y51         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[4]/C
+    SLICE_X87Y51         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  master_stream_inst/M_AXIS_TDATA_reg[4]/Q
+                         net (fo=1, routed)           5.662     6.118    M_AXIS_TDATA_OBUF[4]
+    Y13                  OBUF (Prop_obuf_I_O)         2.696     8.814 r  M_AXIS_TDATA_OBUF[4]_inst/O
+                         net (fo=0)                   0.000     8.814    M_AXIS_TDATA[4]
+    Y13                                                               r  M_AXIS_TDATA[4] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[1]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[1]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.772ns  (logic 3.131ns (35.696%)  route 5.641ns (64.304%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X86Y51         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[1]/C
+    SLICE_X86Y51         FDCE (Prop_fdce_C_Q)         0.518     0.518 r  master_stream_inst/M_AXIS_TDATA_reg[1]/Q
+                         net (fo=1, routed)           5.641     6.159    M_AXIS_TDATA_OBUF[1]
+    V6                   OBUF (Prop_obuf_I_O)         2.613     8.772 r  M_AXIS_TDATA_OBUF[1]_inst/O
+                         net (fo=0)                   0.000     8.772    M_AXIS_TDATA[1]
+    V6                                                                r  M_AXIS_TDATA[1] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[0]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[0]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.718ns  (logic 3.075ns (35.268%)  route 5.643ns (64.732%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X88Y50         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[0]/C
+    SLICE_X88Y50         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  master_stream_inst/M_AXIS_TDATA_reg[0]/Q
+                         net (fo=1, routed)           5.643     6.099    M_AXIS_TDATA_OBUF[0]
+    W6                   OBUF (Prop_obuf_I_O)         2.619     8.718 r  M_AXIS_TDATA_OBUF[0]_inst/O
+                         net (fo=0)                   0.000     8.718    M_AXIS_TDATA[0]
+    W6                                                                r  M_AXIS_TDATA[0] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[3]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[3]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.664ns  (logic 3.248ns (37.493%)  route 5.416ns (62.507%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X89Y50         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[3]/C
+    SLICE_X89Y50         FDCE (Prop_fdce_C_Q)         0.419     0.419 r  master_stream_inst/M_AXIS_TDATA_reg[3]/Q
+                         net (fo=1, routed)           5.416     5.835    M_AXIS_TDATA_OBUF[3]
+    V11                  OBUF (Prop_obuf_I_O)         2.829     8.664 r  M_AXIS_TDATA_OBUF[3]_inst/O
+                         net (fo=0)                   0.000     8.664    M_AXIS_TDATA[3]
+    V11                                                               r  M_AXIS_TDATA[3] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[6]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[6]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.661ns  (logic 3.198ns (36.920%)  route 5.463ns (63.080%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X89Y50         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[6]/C
+    SLICE_X89Y50         FDCE (Prop_fdce_C_Q)         0.419     0.419 r  master_stream_inst/M_AXIS_TDATA_reg[6]/Q
+                         net (fo=1, routed)           5.463     5.882    M_AXIS_TDATA_OBUF[6]
+    U5                   OBUF (Prop_obuf_I_O)         2.779     8.661 r  M_AXIS_TDATA_OBUF[6]_inst/O
+                         net (fo=0)                   0.000     8.661    M_AXIS_TDATA[6]
+    U5                                                                r  M_AXIS_TDATA[6] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[7]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[7]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.572ns  (logic 3.119ns (36.391%)  route 5.452ns (63.609%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X88Y50         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[7]/C
+    SLICE_X88Y50         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  master_stream_inst/M_AXIS_TDATA_reg[7]/Q
+                         net (fo=1, routed)           5.452     5.908    M_AXIS_TDATA_OBUF[7]
+    T5                   OBUF (Prop_obuf_I_O)         2.663     8.572 r  M_AXIS_TDATA_OBUF[7]_inst/O
+                         net (fo=0)                   0.000     8.572    M_AXIS_TDATA[7]
+    T5                                                                r  M_AXIS_TDATA[7] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[5]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[5]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.570ns  (logic 3.286ns (38.340%)  route 5.285ns (61.660%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X89Y50         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[5]/C
+    SLICE_X89Y50         FDCE (Prop_fdce_C_Q)         0.419     0.419 r  master_stream_inst/M_AXIS_TDATA_reg[5]/Q
+                         net (fo=1, routed)           5.285     5.704    M_AXIS_TDATA_OBUF[5]
+    Y12                  OBUF (Prop_obuf_I_O)         2.867     8.570 r  M_AXIS_TDATA_OBUF[5]_inst/O
+                         net (fo=0)                   0.000     8.570    M_AXIS_TDATA[5]
+    Y12                                                               r  M_AXIS_TDATA[5] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[10]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[10]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.441ns  (logic 3.123ns (36.992%)  route 5.319ns (63.008%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X88Y50         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[10]/C
+    SLICE_X88Y50         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  master_stream_inst/M_AXIS_TDATA_reg[10]/Q
+                         net (fo=1, routed)           5.319     5.775    M_AXIS_TDATA_OBUF[10]
+    U8                   OBUF (Prop_obuf_I_O)         2.667     8.441 r  M_AXIS_TDATA_OBUF[10]_inst/O
+                         net (fo=0)                   0.000     8.441    M_AXIS_TDATA[10]
+    U8                                                                r  M_AXIS_TDATA[10] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[11]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[11]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.429ns  (logic 3.144ns (37.297%)  route 5.285ns (62.703%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X89Y51         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[11]/C
+    SLICE_X89Y51         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  master_stream_inst/M_AXIS_TDATA_reg[11]/Q
+                         net (fo=1, routed)           5.285     5.741    M_AXIS_TDATA_OBUF[11]
+    U9                   OBUF (Prop_obuf_I_O)         2.688     8.429 r  M_AXIS_TDATA_OBUF[11]_inst/O
+                         net (fo=0)                   0.000     8.429    M_AXIS_TDATA[11]
+    U9                                                                r  M_AXIS_TDATA[11] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 master_stream_inst/M_AXIS_TDATA_reg[15]/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            M_AXIS_TDATA[15]
+                            (output port)
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.428ns  (logic 3.171ns (37.625%)  route 5.257ns (62.375%))
+  Logic Levels:           2  (FDCE=1 OBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X88Y51         FDCE                         0.000     0.000 r  master_stream_inst/M_AXIS_TDATA_reg[15]/C
+    SLICE_X88Y51         FDCE (Prop_fdce_C_Q)         0.456     0.456 r  master_stream_inst/M_AXIS_TDATA_reg[15]/Q
+                         net (fo=1, routed)           5.257     5.713    M_AXIS_TDATA_OBUF[15]
+    V8                   OBUF (Prop_obuf_I_O)         2.715     8.428 r  M_AXIS_TDATA_OBUF[15]_inst/O
+                         net (fo=0)                   0.000     8.428    M_AXIS_TDATA[15]
+    V8                                                                r  M_AXIS_TDATA[15] (OUT)
+  -------------------------------------------------------------------    -------------------
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 slave_stream_inst/M_AXIS_TVALID_reg/C
+                            (rising edge-triggered cell FDCE)
+  Destination:            master_stream_inst/M_AXIS_TVALID_reg/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.405ns  (logic 0.186ns (45.914%)  route 0.219ns (54.086%))
+  Logic Levels:           2  (FDCE=1 LUT2=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    SLICE_X113Y75        FDCE                         0.000     0.000 r  slave_stream_inst/M_AXIS_TVALID_reg/C
+    SLICE_X113Y75        FDCE (Prop_fdce_C_Q)         0.141     0.141 r  slave_stream_inst/M_AXIS_TVALID_reg/Q
+                         net (fo=1, routed)           0.219     0.360    slave_stream_inst/intermediate_valid
+    SLICE_X113Y75        LUT2 (Prop_lut2_I0_O)        0.045     0.405 r  slave_stream_inst/M_AXIS_TDATA[23]_i_1__0/O
+                         net (fo=25, routed)          0.000     0.405    master_stream_inst/I1
+    SLICE_X113Y75        FDCE                                         r  master_stream_inst/M_AXIS_TVALID_reg/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[1]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[1]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.544ns  (logic 0.198ns (36.475%)  route 0.346ns (63.525%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P16                                               0.000     0.000 r  S_AXIS_TDATA[1] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[1]
+    P16                  IBUF (Prop_ibuf_I_O)         0.198     0.198 r  S_AXIS_TDATA_IBUF[1]_inst/O
+                         net (fo=1, routed)           0.346     0.544    slave_stream_inst/S_AXIS_TDATA_IBUF[1]
+    SLICE_X106Y51        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[0]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[0]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.548ns  (logic 0.200ns (36.566%)  route 0.347ns (63.434%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    T19                                               0.000     0.000 r  S_AXIS_TDATA[0] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[0]
+    T19                  IBUF (Prop_ibuf_I_O)         0.200     0.200 r  S_AXIS_TDATA_IBUF[0]_inst/O
+                         net (fo=1, routed)           0.347     0.548    slave_stream_inst/S_AXIS_TDATA_IBUF[0]
+    SLICE_X106Y50        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[3]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[3]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.579ns  (logic 0.175ns (30.212%)  route 0.404ns (69.788%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P18                                               0.000     0.000 r  S_AXIS_TDATA[3] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[3]
+    P18                  IBUF (Prop_ibuf_I_O)         0.175     0.175 r  S_AXIS_TDATA_IBUF[3]_inst/O
+                         net (fo=1, routed)           0.404     0.579    slave_stream_inst/S_AXIS_TDATA_IBUF[3]
+    SLICE_X106Y51        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TVALID
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TVALID_reg/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.580ns  (logic 0.212ns (36.557%)  route 0.368ns (63.443%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    U18                                               0.000     0.000 r  S_AXIS_TVALID (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TVALID
+    U18                  IBUF (Prop_ibuf_I_O)         0.212     0.212 r  S_AXIS_TVALID_IBUF_inst/O
+                         net (fo=25, routed)          0.368     0.580    slave_stream_inst/E[0]
+    SLICE_X113Y75        FDCE                                         r  slave_stream_inst/M_AXIS_TVALID_reg/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[2]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[2]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.595ns  (logic 0.194ns (32.534%)  route 0.401ns (67.466%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P15                                               0.000     0.000 r  S_AXIS_TDATA[2] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[2]
+    P15                  IBUF (Prop_ibuf_I_O)         0.194     0.194 r  S_AXIS_TDATA_IBUF[2]_inst/O
+                         net (fo=1, routed)           0.401     0.595    slave_stream_inst/S_AXIS_TDATA_IBUF[2]
+    SLICE_X106Y51        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[4]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[4]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.599ns  (logic 0.190ns (31.729%)  route 0.409ns (68.271%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    N17                                               0.000     0.000 r  S_AXIS_TDATA[4] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[4]
+    N17                  IBUF (Prop_ibuf_I_O)         0.190     0.190 r  S_AXIS_TDATA_IBUF[4]_inst/O
+                         net (fo=1, routed)           0.409     0.599    slave_stream_inst/S_AXIS_TDATA_IBUF[4]
+    SLICE_X107Y53        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[4]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[5]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[5]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.600ns  (logic 0.201ns (33.403%)  route 0.400ns (66.597%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W19                                               0.000     0.000 r  S_AXIS_TDATA[5] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[5]
+    W19                  IBUF (Prop_ibuf_I_O)         0.201     0.201 r  S_AXIS_TDATA_IBUF[5]_inst/O
+                         net (fo=1, routed)           0.400     0.600    slave_stream_inst/S_AXIS_TDATA_IBUF[5]
+    SLICE_X107Y53        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[11]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[11]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.613ns  (logic 0.187ns (30.560%)  route 0.426ns (69.440%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    R17                                               0.000     0.000 r  S_AXIS_TDATA[11] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[11]
+    R17                  IBUF (Prop_ibuf_I_O)         0.187     0.187 r  S_AXIS_TDATA_IBUF[11]_inst/O
+                         net (fo=1, routed)           0.426     0.613    slave_stream_inst/S_AXIS_TDATA_IBUF[11]
+    SLICE_X107Y55        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[11]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 S_AXIS_TDATA[10]
+                            (input port)
+  Destination:            slave_stream_inst/M_AXIS_TDATA_reg[10]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.618ns  (logic 0.196ns (31.679%)  route 0.422ns (68.321%))
+  Logic Levels:           1  (IBUF=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    T17                                               0.000     0.000 r  S_AXIS_TDATA[10] (IN)
+                         net (fo=0)                   0.000     0.000    S_AXIS_TDATA[10]
+    T17                  IBUF (Prop_ibuf_I_O)         0.196     0.196 r  S_AXIS_TDATA_IBUF[10]_inst/O
+                         net (fo=1, routed)           0.422     0.618    slave_stream_inst/S_AXIS_TDATA_IBUF[10]
+    SLICE_X107Y55        FDCE                                         r  slave_stream_inst/M_AXIS_TDATA_reg[10]/D
+  -------------------------------------------------------------------    -------------------
+
+
+
+
+

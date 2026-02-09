@@ -1,0 +1,24 @@
+#-----------------------------------------------------------
+# Vivado v2024.1.2 (64-bit)
+# SW Build 5164865 on Thu Sep  5 14:37:11 MDT 2024
+# IP Build 5164407 on Fri Sep  6 08:18:11 MDT 2024
+# SharedData Build 5164864 on Thu Sep 05 13:09:09 MDT 2024
+# Start of session at: Sun Dec 29 13:36:49 2024
+# Process ID: 34768
+# Current directory: C:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/BlockDesign_HDMI_With-filter/PogingZes/HdmiPogingDrie/HdmiPogingDrie.runs/design_1_eFPGA_FILTER_Core1_0_0_synth_1
+# Command line: vivado.exe -log design_1_eFPGA_FILTER_Core1_0_0.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source design_1_eFPGA_FILTER_Core1_0_0.tcl
+# Log file: C:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/BlockDesign_HDMI_With-filter/PogingZes/HdmiPogingDrie/HdmiPogingDrie.runs/design_1_eFPGA_FILTER_Core1_0_0_synth_1/design_1_eFPGA_FILTER_Core1_0_0.vds
+# Journal file: C:/EOS/EOS_HDMI-UDP_Game/Ex2_Src/BlockDesign_HDMI_With-filter/PogingZes/HdmiPogingDrie/HdmiPogingDrie.runs/design_1_eFPGA_FILTER_Core1_0_0_synth_1\vivado.jou
+# Running On        :MSI
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :22631
+# Processor Detail  :11th Gen Intel(R) Core(TM) i7-1195G7 @ 2.90GHz
+# CPU Frequency     :2918 MHz
+# CPU Physical cores:4
+# CPU Logical cores :8
+# Host memory       :16867 MB
+# Swap memory       :11654 MB
+# Total Virtual     :28522 MB
+# Available Virtual :7656 MB
+#-----------------------------------------------------------
+source design_1_eFPGA_FILTER_Core1_0_0.tcl -notrace

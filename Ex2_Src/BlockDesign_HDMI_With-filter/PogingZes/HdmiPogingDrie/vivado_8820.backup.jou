@@ -1,0 +1,124 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Tue Dec  3 09:15:19 2024
+# Process ID: 8820
+# Current directory: C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie
+# Command line: vivado.exe -gui_launcher_event rodinguilauncherevent7232 C:\DERDEJAAR\EOS\Series\Freestyle\Pogingvier\HdmiPogingDrie\HdmiPogingDrie.xpr
+# Log file: C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/vivado.log
+# Journal file: C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie\vivado.jou
+# Running On        :DESKTOP-BEAVFHB
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :22631
+# Processor Detail  :11th Gen Intel(R) Core(TM) i5-1135G7 @ 2.40GHz
+# CPU Frequency     :2419 MHz
+# CPU Physical cores:4
+# CPU Logical cores :8
+# Host memory       :16948 MB
+# Swap memory       :6710 MB
+# Total Virtual     :23659 MB
+# Available Virtual :11516 MB
+#-----------------------------------------------------------
+start_gui
+open_project C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.xpr
+open_bd_design {C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd}
+update_compile_order -fileset sources_1
+set_property location {3 914 141} [get_bd_cells axi_vdma_0]
+set_property location {3 912 137} [get_bd_cells axi_vdma_0]
+set_property location {3 915 142} [get_bd_cells axi_vdma_0]
+set_property location {3 916 145} [get_bd_cells axi_vdma_0]
+set_property location {3 888 151} [get_bd_cells axi_vdma_0]
+startgroup
+set_property CONFIG.PCW_EN_CLK1_PORT {0} [get_bd_cells processing_system7_0]
+endgroup
+delete_bd_objs [get_bd_nets processing_system7_0_FCLK_CLK0]
+startgroup
+create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz:6.0 clk_wiz_0
+endgroup
+set_property -dict [list \
+  CONFIG.CLKOUT1_JITTER {217.614} \
+  CONFIG.CLKOUT1_PHASE_ERROR {245.344} \
+  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {148.500} \
+  CONFIG.MMCM_CLKFBOUT_MULT_F {37.125} \
+  CONFIG.MMCM_CLKOUT0_DIVIDE_F {6.250} \
+  CONFIG.MMCM_DIVCLK_DIVIDE {4} \
+  CONFIG.USE_RESET {false} \
+] [get_bd_cells clk_wiz_0]
+connect_bd_net [get_bd_pins processing_system7_0/FCLK_CLK0] [get_bd_pins clk_wiz_0/clk_in1]
+connect_bd_net [get_bd_pins smartconnect_0/aclk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins ps7_0_axi_periph/ACLK] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins ps7_0_axi_periph/S00_ACLK] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins ps7_0_axi_periph/M00_ACLK] [get_bd_pins clk_wiz_0/clk_out1]
+delete_bd_objs [get_bd_nets processing_system7_0_FCLK_CLK1]
+connect_bd_net [get_bd_pins v_tc_0/clk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins v_axi4s_vid_out_0/vid_io_out_clk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins v_axi4s_vid_out_0/aclk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins axi_vdma_0/s_axi_lite_aclk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins axi_vdma_0/m_axi_mm2s_aclk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins axi_vdma_0/m_axis_mm2s_aclk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins rgb2dvi_0/PixelClk] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins processing_system7_0/M_AXI_GP0_ACLK] [get_bd_pins clk_wiz_0/clk_out1]
+connect_bd_net [get_bd_pins processing_system7_0/S_AXI_HP0_ACLK] [get_bd_pins clk_wiz_0/clk_out1]
+startgroup
+set_property CONFIG.VIDEO_MODE {1080p} [get_bd_cells v_tc_0]
+endgroup
+apply_bd_automation -rule xilinx.com:bd_rule:clkrst -config { Clk {/processing_system7_0/FCLK_CLK0 (100 MHz)} Freq {100} Ref_Clk0 {} Ref_Clk1 {} Ref_Clk2 {}}  [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
+disconnect_bd_net /processing_system7_0_FCLK_CLK0 [get_bd_pins rst_ps7_0_100M/slowest_sync_clk]
+connect_bd_net [get_bd_pins rst_ps7_0_100M/slowest_sync_clk] [get_bd_pins clk_wiz_0/clk_out1]
+startgroup
+set_property CONFIG.USE_LOCKED {false} [get_bd_cells clk_wiz_0]
+endgroup
+validate_bd_design
+export_ip_user_files -of_objects  [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd] -no_script -reset -force -quiet
+remove_files  C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+generate_target all [get_files  C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd]
+catch { config_ip_cache -export [get_ips -all design_1_rst_ps7_0_100M_0] }
+catch { config_ip_cache -export [get_ips -all design_1_v_tc_0_0] }
+catch { config_ip_cache -export [get_ips -all design_1_v_axi4s_vid_out_0_0] }
+catch { config_ip_cache -export [get_ips -all design_1_axi_vdma_0_0] }
+catch { config_ip_cache -export [get_ips -all design_1_smartconnect_0_0] }
+catch { config_ip_cache -export [get_ips -all design_1_auto_pc_0] }
+catch { config_ip_cache -export [get_ips -all design_1_clk_wiz_0_0] }
+export_ip_user_files -of_objects [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd]
+launch_runs design_1_auto_pc_0_synth_1 design_1_axi_vdma_0_0_synth_1 design_1_clk_wiz_0_0_synth_1 design_1_processing_system7_0_0_synth_1 design_1_rst_ps7_0_100M_0_synth_1 design_1_smartconnect_0_0_synth_1 design_1_v_axi4s_vid_out_0_0_synth_1 design_1_v_tc_0_0_synth_1 -jobs 8
+wait_on_run design_1_auto_pc_0_synth_1
+wait_on_run design_1_axi_vdma_0_0_synth_1
+wait_on_run design_1_clk_wiz_0_0_synth_1
+wait_on_run design_1_processing_system7_0_0_synth_1
+wait_on_run design_1_rst_ps7_0_100M_0_synth_1
+wait_on_run design_1_smartconnect_0_0_synth_1
+wait_on_run design_1_v_axi4s_vid_out_0_0_synth_1
+wait_on_run design_1_v_tc_0_0_synth_1
+export_simulation -of_objects [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd] -directory C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.ip_user_files/sim_scripts -ip_user_files_dir C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.ip_user_files -ipstatic_source_dir C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/modelsim} {questa=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/questa} {riviera=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/riviera} {activehdl=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+make_wrapper -files [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd] -top
+add_files -norecurse c:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+wait_on_run impl_1
+startgroup
+set_property -dict [list \
+  CONFIG.kClkPrimitive {MMCM} \
+  CONFIG.kClkRange {1} \
+] [get_bd_cells rgb2dvi_0]
+endgroup
+export_ip_user_files -of_objects  [get_files c:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd] -no_script -reset -force -quiet
+remove_files  c:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+generate_target all [get_files  C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd]
+catch { config_ip_cache -export [get_ips -all design_1_rgb2dvi_0_0] }
+catch { config_ip_cache -export [get_ips -all design_1_smartconnect_0_0] }
+catch { [ delete_ip_run [get_ips -all design_1_smartconnect_0_0] ] }
+catch { config_ip_cache -export [get_ips -all design_1_auto_pc_0] }
+export_ip_user_files -of_objects [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd] -no_script -sync -force -quiet
+create_ip_run [get_files -of_objects [get_fileset sources_1] C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd]
+launch_runs design_1_rgb2dvi_0_0_synth_1 -jobs 8
+wait_on_run design_1_rgb2dvi_0_0_synth_1
+export_simulation -of_objects [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd] -directory C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.ip_user_files/sim_scripts -ip_user_files_dir C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.ip_user_files -ipstatic_source_dir C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.ip_user_files/ipstatic -lib_map_path [list {modelsim=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/modelsim} {questa=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/questa} {riviera=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/riviera} {activehdl=C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.cache/compile_simlib/activehdl}] -use_ip_compiled_libs -force -quiet
+make_wrapper -files [get_files C:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.srcs/sources_1/bd/design_1/design_1.bd] -top
+add_files -norecurse c:/DERDEJAAR/EOS/Series/Freestyle/Pogingvier/HdmiPogingDrie/HdmiPogingDrie.gen/sources_1/bd/design_1/hdl/design_1_wrapper.vhd
+reset_run synth_1
+launch_runs impl_1 -to_step write_bitstream -jobs 8
+wait_on_run impl_1
+write_hw_platform -fixed -include_bit -force -file C:/DERDEJAAR/EOS/Series/Freestyle/XsaFiles/design_1_wrapper_T7.xsa

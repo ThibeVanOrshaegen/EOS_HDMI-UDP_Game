@@ -1,0 +1,630 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1.2 (win64) Build 5164865 Thu Sep  5 14:37:11 MDT 2024
+| Date         : Fri Dec 27 13:21:14 2024
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_timing_summary -max_paths 10 -report_unconstrained -file ColorFilter_axi_timing_summary_routed.rpt -pb ColorFilter_axi_timing_summary_routed.pb -rpx ColorFilter_axi_timing_summary_routed.rpx -warn_on_violation
+| Design       : ColorFilter_axi
+| Device       : 7z020-clg400
+| Speed File   : -1  PRODUCTION 1.12 2019-11-22
+| Design State : Routed
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Timing Summary Report
+
+------------------------------------------------------------------------------------------------
+| Timer Settings
+| --------------
+------------------------------------------------------------------------------------------------
+
+  Enable Multi Corner Analysis               :  Yes
+  Enable Pessimism Removal                   :  Yes
+  Pessimism Removal Resolution               :  Nearest Common Node
+  Enable Input Delay Default Clock           :  No
+  Enable Preset / Clear Arcs                 :  No
+  Disable Flight Delays                      :  No
+  Ignore I/O Paths                           :  No
+  Timing Early Launch at Borrowing Latches   :  No
+  Borrow Time for Max Delay Exceptions       :  Yes
+  Merge Timing Exceptions                    :  Yes
+  Inter-SLR Compensation                     :  Conservative
+
+  Corner  Analyze    Analyze    
+  Name    Max Paths  Min Paths  
+  ------  ---------  ---------  
+  Slow    Yes        Yes        
+  Fast    Yes        Yes        
+
+
+------------------------------------------------------------------------------------------------
+| Report Methodology
+| ------------------
+------------------------------------------------------------------------------------------------
+
+Rule       Severity          Description                  Violations  
+---------  ----------------  ---------------------------  ----------  
+TIMING-17  Critical Warning  Non-clocked sequential cell  25          
+
+Note: This report is based on the most recent report_methodology run and may not be up-to-date. Run report_methodology on the current design for the latest report.
+
+
+
+check_timing report
+
+Table of Contents
+-----------------
+1. checking no_clock (25)
+2. checking constant_clock (0)
+3. checking pulse_width_clock (0)
+4. checking unconstrained_internal_endpoints (50)
+5. checking no_input_delay (26)
+6. checking no_output_delay (25)
+7. checking multiple_clock (0)
+8. checking generated_clocks (0)
+9. checking loops (0)
+10. checking partial_input_delay (0)
+11. checking partial_output_delay (0)
+12. checking latch_loops (0)
+
+1. checking no_clock (25)
+-------------------------
+ There are 25 register/latch pins with no clock driven by root clock pin: ACLK (HIGH)
+
+
+2. checking constant_clock (0)
+------------------------------
+ There are 0 register/latch pins with constant_clock.
+
+
+3. checking pulse_width_clock (0)
+---------------------------------
+ There are 0 register/latch pins which need pulse_width check
+
+
+4. checking unconstrained_internal_endpoints (50)
+-------------------------------------------------
+ There are 50 pins that are not constrained for maximum delay. (HIGH)
+
+ There are 0 pins that are not constrained for maximum delay due to constant clock.
+
+
+5. checking no_input_delay (26)
+-------------------------------
+ There are 26 input ports with no input delay specified. (HIGH)
+
+ There are 0 input ports with no input delay but user has a false path constraint.
+
+
+6. checking no_output_delay (25)
+--------------------------------
+ There are 25 ports with no output delay specified. (HIGH)
+
+ There are 0 ports with no output delay but user has a false path constraint
+
+ There are 0 ports with no output delay but with a timing clock defined on it or propagating through it
+
+
+7. checking multiple_clock (0)
+------------------------------
+ There are 0 register/latch pins with multiple clocks.
+
+
+8. checking generated_clocks (0)
+--------------------------------
+ There are 0 generated clocks that are not connected to a clock source.
+
+
+9. checking loops (0)
+---------------------
+ There are 0 combinational loops in the design.
+
+
+10. checking partial_input_delay (0)
+------------------------------------
+ There are 0 input ports with partial input delay specified.
+
+
+11. checking partial_output_delay (0)
+-------------------------------------
+ There are 0 ports with partial output delay specified.
+
+
+12. checking latch_loops (0)
+----------------------------
+ There are 0 combinational latch loops in the design through latch input
+
+
+
+------------------------------------------------------------------------------------------------
+| Design Timing Summary
+| ---------------------
+------------------------------------------------------------------------------------------------
+
+    WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+    -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+        inf        0.000                      0                   75          inf        0.000                      0                   75           NA           NA                      NA                    NA  
+
+
+There are no user specified timing constraints.
+
+
+------------------------------------------------------------------------------------------------
+| Clock Summary
+| -------------
+------------------------------------------------------------------------------------------------
+
+
+------------------------------------------------------------------------------------------------
+| Intra Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+Clock             WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints     WPWS(ns)     TPWS(ns)  TPWS Failing Endpoints  TPWS Total Endpoints  
+-----             -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------     --------     --------  ----------------------  --------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Inter Clock Table
+| -----------------
+------------------------------------------------------------------------------------------------
+
+From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| Other Path Groups Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock          WNS(ns)      TNS(ns)  TNS Failing Endpoints  TNS Total Endpoints      WHS(ns)      THS(ns)  THS Failing Endpoints  THS Total Endpoints  
+----------    ----------    --------          -------      -------  ---------------------  -------------------      -------      -------  ---------------------  -------------------  
+
+
+------------------------------------------------------------------------------------------------
+| User Ignored Path Table
+| -----------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+
+
+------------------------------------------------------------------------------------------------
+| Unconstrained Path Table
+| ------------------------
+------------------------------------------------------------------------------------------------
+
+Path Group    From Clock    To Clock    
+----------    ----------    --------    
+(none)                                    
+
+
+------------------------------------------------------------------------------------------------
+| Timing Details
+| --------------
+------------------------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------------
+Path Group:  (none)
+From Clock:  
+  To Clock:  
+
+Max Delay            75 Endpoints
+Min Delay            75 Endpoints
+--------------------------------------------------------------------------------------
+
+
+Max Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[10]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.979ns  (logic 1.080ns (12.026%)  route 7.899ns (87.974%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.863     8.979    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y77        FDCE                                         f  m_axis_video_tdata_reg[10]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[16]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.979ns  (logic 1.080ns (12.026%)  route 7.899ns (87.974%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.863     8.979    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y77        FDCE                                         f  m_axis_video_tdata_reg[16]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[20]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.979ns  (logic 1.080ns (12.026%)  route 7.899ns (87.974%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.863     8.979    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y77        FDCE                                         f  m_axis_video_tdata_reg[20]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[21]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.979ns  (logic 1.080ns (12.026%)  route 7.899ns (87.974%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.863     8.979    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y77        FDCE                                         f  m_axis_video_tdata_reg[21]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[22]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.979ns  (logic 1.080ns (12.026%)  route 7.899ns (87.974%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.863     8.979    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y77        FDCE                                         f  m_axis_video_tdata_reg[22]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[23]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.979ns  (logic 1.080ns (12.026%)  route 7.899ns (87.974%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.863     8.979    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y77        FDCE                                         f  m_axis_video_tdata_reg[23]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[14]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.837ns  (logic 1.080ns (12.219%)  route 7.757ns (87.781%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.721     8.837    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y76        FDCE                                         f  m_axis_video_tdata_reg[14]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[15]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.837ns  (logic 1.080ns (12.219%)  route 7.757ns (87.781%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.721     8.837    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y76        FDCE                                         f  m_axis_video_tdata_reg[15]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[17]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.837ns  (logic 1.080ns (12.219%)  route 7.757ns (87.781%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.721     8.837    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y76        FDCE                                         f  m_axis_video_tdata_reg[17]/CLR
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 ARESETN
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[18]/CLR
+  Path Group:             (none)
+  Path Type:              Max at Slow Process Corner
+  Data Path Delay:        8.837ns  (logic 1.080ns (12.219%)  route 7.757ns (87.781%))
+  Logic Levels:           2  (IBUF=1 LUT1=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    W6                                                0.000     0.000 r  ARESETN (IN)
+                         net (fo=0)                   0.000     0.000    ARESETN
+    W6                   IBUF (Prop_ibuf_I_O)         0.956     0.956 r  ARESETN_IBUF_inst/O
+                         net (fo=1, routed)           3.036     3.992    ARESETN_IBUF
+    SLICE_X24Y41         LUT1 (Prop_lut1_I0_O)        0.124     4.116 f  m_axis_video_tdata[23]_i_2/O
+                         net (fo=25, routed)          4.721     8.837    m_axis_video_tdata[23]_i_2_n_0
+    SLICE_X113Y76        FDCE                                         f  m_axis_video_tdata_reg[18]/CLR
+  -------------------------------------------------------------------    -------------------
+
+
+
+
+
+Min Delay Paths
+--------------------------------------------------------------------------------------
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[5]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.601ns  (logic 0.235ns (39.098%)  route 0.366ns (60.902%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.366     0.556    s_axis_video_tdata_IBUF[23]
+    SLICE_X113Y73        LUT5 (Prop_lut5_I2_O)        0.045     0.601 r  m_axis_video_tdata[5]_i_1/O
+                         net (fo=1, routed)           0.000     0.601    p_0_in[5]
+    SLICE_X113Y73        FDCE                                         r  m_axis_video_tdata_reg[5]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[0]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.604ns  (logic 0.235ns (38.904%)  route 0.369ns (61.096%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.369     0.559    s_axis_video_tdata_IBUF[23]
+    SLICE_X113Y73        LUT5 (Prop_lut5_I2_O)        0.045     0.604 r  m_axis_video_tdata[0]_i_1/O
+                         net (fo=1, routed)           0.000     0.604    p_0_in[0]
+    SLICE_X113Y73        FDCE                                         r  m_axis_video_tdata_reg[0]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[1]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.634ns  (logic 0.235ns (37.064%)  route 0.399ns (62.936%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.399     0.589    s_axis_video_tdata_IBUF[23]
+    SLICE_X113Y73        LUT5 (Prop_lut5_I2_O)        0.045     0.634 r  m_axis_video_tdata[1]_i_1/O
+                         net (fo=1, routed)           0.000     0.634    p_0_in[1]
+    SLICE_X113Y73        FDCE                                         r  m_axis_video_tdata_reg[1]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[3]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.635ns  (logic 0.235ns (37.005%)  route 0.400ns (62.995%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.400     0.590    s_axis_video_tdata_IBUF[23]
+    SLICE_X113Y73        LUT5 (Prop_lut5_I2_O)        0.045     0.635 r  m_axis_video_tdata[3]_i_1/O
+                         net (fo=1, routed)           0.000     0.635    p_0_in[3]
+    SLICE_X113Y73        FDCE                                         r  m_axis_video_tdata_reg[3]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[21]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[11]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.638ns  (logic 0.222ns (34.778%)  route 0.416ns (65.222%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P20                                               0.000     0.000 f  s_axis_video_tdata[21] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[21]
+    P20                  IBUF (Prop_ibuf_I_O)         0.177     0.177 f  s_axis_video_tdata_IBUF[21]_inst/O
+                         net (fo=23, routed)          0.416     0.593    s_axis_video_tdata_IBUF[21]
+    SLICE_X112Y73        LUT5 (Prop_lut5_I4_O)        0.045     0.638 r  m_axis_video_tdata[11]_i_1/O
+                         net (fo=1, routed)           0.000     0.638    p_0_in[11]
+    SLICE_X112Y73        FDCE                                         r  m_axis_video_tdata_reg[11]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[21]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[12]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.642ns  (logic 0.222ns (34.561%)  route 0.420ns (65.439%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P20                                               0.000     0.000 f  s_axis_video_tdata[21] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[21]
+    P20                  IBUF (Prop_ibuf_I_O)         0.177     0.177 f  s_axis_video_tdata_IBUF[21]_inst/O
+                         net (fo=23, routed)          0.420     0.597    s_axis_video_tdata_IBUF[21]
+    SLICE_X112Y73        LUT5 (Prop_lut5_I4_O)        0.045     0.642 r  m_axis_video_tdata[12]_i_1/O
+                         net (fo=1, routed)           0.000     0.642    p_0_in[12]
+    SLICE_X112Y73        FDCE                                         r  m_axis_video_tdata_reg[12]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[6]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.731ns  (logic 0.235ns (32.152%)  route 0.496ns (67.848%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.496     0.686    s_axis_video_tdata_IBUF[23]
+    SLICE_X112Y73        LUT5 (Prop_lut5_I2_O)        0.045     0.731 r  m_axis_video_tdata[6]_i_1/O
+                         net (fo=1, routed)           0.000     0.731    p_0_in[6]
+    SLICE_X112Y73        FDCE                                         r  m_axis_video_tdata_reg[6]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[22]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[22]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.733ns  (logic 0.211ns (28.740%)  route 0.522ns (71.260%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    N20                                               0.000     0.000 r  s_axis_video_tdata[22] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[22]
+    N20                  IBUF (Prop_ibuf_I_O)         0.169     0.169 r  s_axis_video_tdata_IBUF[22]_inst/O
+                         net (fo=2, routed)           0.522     0.691    s_axis_video_tdata_IBUF[22]
+    SLICE_X113Y77        LUT5 (Prop_lut5_I0_O)        0.042     0.733 r  m_axis_video_tdata[22]_i_1/O
+                         net (fo=1, routed)           0.000     0.733    p_0_in[22]
+    SLICE_X113Y77        FDCE                                         r  m_axis_video_tdata_reg[22]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[2]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.738ns  (logic 0.235ns (31.847%)  route 0.503ns (68.153%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.503     0.693    s_axis_video_tdata_IBUF[23]
+    SLICE_X112Y74        LUT5 (Prop_lut5_I2_O)        0.045     0.738 r  m_axis_video_tdata[2]_i_1/O
+                         net (fo=1, routed)           0.000     0.738    p_0_in[2]
+    SLICE_X112Y74        FDCE                                         r  m_axis_video_tdata_reg[2]/D
+  -------------------------------------------------------------------    -------------------
+
+Slack:                    inf
+  Source:                 s_axis_video_tdata[23]
+                            (input port)
+  Destination:            m_axis_video_tdata_reg[13]/D
+  Path Group:             (none)
+  Path Type:              Min at Fast Process Corner
+  Data Path Delay:        0.740ns  (logic 0.235ns (31.761%)  route 0.505ns (68.239%))
+  Logic Levels:           2  (IBUF=1 LUT5=1)
+
+    Location             Delay type                Incr(ns)  Path(ns)    Netlist Resource(s)
+  -------------------------------------------------------------------    -------------------
+    P19                                               0.000     0.000 f  s_axis_video_tdata[23] (IN)
+                         net (fo=0)                   0.000     0.000    s_axis_video_tdata[23]
+    P19                  IBUF (Prop_ibuf_I_O)         0.190     0.190 f  s_axis_video_tdata_IBUF[23]_inst/O
+                         net (fo=24, routed)          0.505     0.695    s_axis_video_tdata_IBUF[23]
+    SLICE_X112Y73        LUT5 (Prop_lut5_I2_O)        0.045     0.740 r  m_axis_video_tdata[13]_i_1/O
+                         net (fo=1, routed)           0.000     0.740    p_0_in[13]
+    SLICE_X112Y73        FDCE                                         r  m_axis_video_tdata_reg[13]/D
+  -------------------------------------------------------------------    -------------------
+
+
+
+
+
